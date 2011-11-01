@@ -1062,7 +1062,7 @@ int __isolate_lru_page(struct page *page, isolate_mode_t mode, int file)
 	ret = -EBUSY;
 
 	if ((mode & ISOLATE_CLEAN) && (PageDirty(page) || PageWriteback(page)))
-			return ret;
+		return ret;
 
 	if (likely(get_page_unless_zero(page))) {
 		/*
