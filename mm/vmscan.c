@@ -1038,7 +1038,7 @@ int __isolate_lru_page(struct page *page, isolate_mode_t mode, int file)
 		return ret;
 
 	all_lru_mode = (mode & (ISOLATE_ACTIVE|ISOLATE_INACTIVE)) ==
-			(ISOLATE_ACTIVE|ISOLATE_INACTIVE);
+		(ISOLATE_ACTIVE|ISOLATE_INACTIVE);
 
 	/*
 	 * When checking the active state, we need to be sure we are
@@ -1226,7 +1226,7 @@ static unsigned long isolate_pages_global(unsigned long nr,
 					struct list_head *dst,
 					unsigned long *scanned, int order,
 					isolate_mode_t mode,
-					struct zone *z, int active, int file)
+					struct zone *z,	int active, int file)
 {
 	int lru = LRU_BASE;
 	if (active)
@@ -1486,13 +1486,14 @@ shrink_inactive_list(unsigned long nr_to_scan, struct zone *zone,
 
 	set_reclaim_mode(priority, sc, false);
 	if (sc->reclaim_mode & RECLAIM_MODE_LUMPYRECLAIM)
-			reclaim_mode |= ISOLATE_ACTIVE;
+		reclaim_mode |= ISOLATE_ACTIVE;
+
 	lru_add_drain();
 	spin_lock_irq(&zone->lru_lock);
 
 	if (scanning_global_lru(sc)) {
-			nr_taken = isolate_pages_global(nr_to_scan, &page_list,
-					&nr_scanned, sc->order, reclaim_mode, zone, 0, file);
+		nr_taken = isolate_pages_global(nr_to_scan, &page_list,
+			&nr_scanned, sc->order, reclaim_mode, zone, 0, file);
 		zone->pages_scanned += nr_scanned;
 		if (current_is_kswapd())
 			__count_zone_vm_events(PGSCAN_KSWAPD, zone,
@@ -1501,9 +1502,9 @@ shrink_inactive_list(unsigned long nr_to_scan, struct zone *zone,
 			__count_zone_vm_events(PGSCAN_DIRECT, zone,
 					       nr_scanned);
 	} else {
-			nr_taken = mem_cgroup_isolate_pages(nr_to_scan, &page_list,
-					&nr_scanned, sc->order, reclaim_mode, zone,
-					sc->mem_cgroup, 0, file);
+		nr_taken = mem_cgroup_isolate_pages(nr_to_scan, &page_list,
+			&nr_scanned, sc->order, reclaim_mode, zone,
+			sc->mem_cgroup, 0, file);
 		/*
 		 * mem_cgroup_isolate_pages() keeps track of
 		 * scanned pages on its own.
