@@ -54,7 +54,7 @@ static inline bool compaction_deferred(struct zone *zone)
 	return zone->compact_considered < (1UL << zone->compact_defer_shift);
 }
 
-extern int compact_nodes(void);
+extern void compact_nodes(void);
 
 #else
 static inline unsigned long try_to_compact_pages(struct zonelist *zonelist,
