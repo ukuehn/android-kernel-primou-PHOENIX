@@ -54,6 +54,8 @@ static inline bool compaction_deferred(struct zone *zone)
 	return zone->compact_considered < (1UL << zone->compact_defer_shift);
 }
 
+extern int compact_nodes(void);
+
 #else
 static inline unsigned long try_to_compact_pages(struct zonelist *zonelist,
 			int order, gfp_t gfp_mask, nodemask_t *nodemask,
@@ -76,7 +78,7 @@ static inline bool compaction_deferred(struct zone *zone)
 	return 1;
 }
 
-static inline int compact_nodes(bool sync)
+static inline int compact_nodes()
 {
     return COMPACT_CONTINUE;
 }
